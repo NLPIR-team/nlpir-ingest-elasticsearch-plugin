@@ -8,15 +8,12 @@ buildscript {
         classpath "org.elasticsearch.gradle:build-tools:7.11.1"
     }
 }
-apply plugin: 'java'
-apply plugin: 'elasticsearch.esplugin'
-apply plugin: 'idea'
-apply plugin: 'maven'
 
+apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'elasticsearch.esplugin'
 apply plugin: 'elasticsearch.yaml-rest-test'
 apply plugin: 'elasticsearch.testclusters'
-
 
 esplugin {
     name 'nlpir-ingest'
@@ -26,7 +23,8 @@ esplugin {
     licenseFile rootProject.file('NOTICE.txt')
     noticeFile rootProject.file('NOTICE.txt')
 }
-
+sourceCompatibility = 11
+targetCompatibility = 11
 idea {
     module {
         downloadJavadoc = true
