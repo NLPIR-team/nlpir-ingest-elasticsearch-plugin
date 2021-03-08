@@ -38,9 +38,17 @@ public class DocExtractorProcessorTest extends ESTestCase {
             }
         }
     }
+    public void testExtractPdf() throws Exception {
+        Processor processor = new DocExtractorProcessor(randomAlphaOfLength(10), null, "source_field", DocExtractorProcessor.FieldType.PDF,"doc_extract");
+        Map<String, Object> document;
+        document = this.parseDocument("test.pdf", processor);
+        System.out.println(document);
+        document = this.parseDocument("test2.pdf", processor);
+        System.out.println(document);
+    }
 
     public void testExtractDoc() throws Exception {
-        Processor processor = new DocExtractorProcessor(randomAlphaOfLength(10), null, "source_field", "doc_extract");
+        Processor processor = new DocExtractorProcessor(randomAlphaOfLength(10), null, "source_field", DocExtractorProcessor.FieldType.DOCX,"doc_extract");
         Map<String, Object> document;
         document = this.parseDocument("test.docx", processor);
         System.out.println(document);

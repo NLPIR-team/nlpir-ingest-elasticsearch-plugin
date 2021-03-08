@@ -1,9 +1,11 @@
-package com.lingjoin.nlpir.plugin.ingest.document;
+package com.lingjoin.nlpir.plugin.ingest.docx;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.PackageProperties;
 import org.apache.poi.xwpf.usermodel.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class Document extends Element{
@@ -22,8 +24,8 @@ public class Document extends Element{
 
     protected List<IElement> elements;
 
-    public Document(XWPFDocument doc) throws InvalidFormatException {
-
+    public Document(InputStream is) throws InvalidFormatException, IOException {
+        XWPFDocument doc = new XWPFDocument(is);
         //TODO implement it
         this.charCount = 0;
 
@@ -58,6 +60,7 @@ public class Document extends Element{
         for (XWPFParagraph paragraph : doc.getParagraphs()) {
             this.elements.add(new Paragraph(paragraph));
         }
+        doc.close();
 
     }
     public Map<String, Object> toMap(){

@@ -1,4 +1,4 @@
-package com.lingjoin.nlpir.plugin.ingest.document;
+package com.lingjoin.nlpir.plugin.ingest.docx;
 
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;

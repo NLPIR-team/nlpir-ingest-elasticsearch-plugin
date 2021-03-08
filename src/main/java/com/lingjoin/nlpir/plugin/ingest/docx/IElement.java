@@ -1,4 +1,4 @@
-package com.lingjoin.nlpir.plugin.ingest.document;
+package com.lingjoin.nlpir.plugin.ingest.docx;
 
 import java.util.Map;
 
