@@ -1,5 +1,6 @@
-package com.lingjoin.nlpir.plugin.ingest.docx;
+package com.lingjoin.nlpir.plugin.ingest.document.docx;
 
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.util.*;

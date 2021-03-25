@@ -1,5 +1,6 @@
-package com.lingjoin.nlpir.plugin.ingest.docx;
+package com.lingjoin.nlpir.plugin.ingest.document.docx;
 
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.PackageProperties;
 import org.apache.poi.xwpf.usermodel.*;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Document extends Element{
+public class Document extends Element {
 
     protected final String author;
     protected final String title;
@@ -22,7 +23,7 @@ public class Document extends Element{
     protected List<Footer> footers;
     protected List<Header> headers;
 
-    protected List<IElement> elements;
+    protected List<Element> elements;
 
     public Document(InputStream is) throws InvalidFormatException, IOException {
         XWPFDocument doc = new XWPFDocument(is);

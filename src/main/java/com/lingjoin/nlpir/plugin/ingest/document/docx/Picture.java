@@ -1,5 +1,6 @@
-package com.lingjoin.nlpir.plugin.ingest.docx;
+package com.lingjoin.nlpir.plugin.ingest.document.docx;
 
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFPicture;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Picture extends Element{
+public class Picture extends Element {
     private final String elementType;
     private final String description;
     private final String name;

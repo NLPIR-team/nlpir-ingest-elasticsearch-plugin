@@ -1,7 +1,7 @@
 package com.lingjoin.nlpir.plugin.ingest;
 
-
-import com.lingjoin.nlpir.plugin.ingest.docx.Document;
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
+import com.lingjoin.nlpir.plugin.ingest.document.docx.Document;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.elasticsearch.ingest.AbstractProcessor;
@@ -18,6 +18,24 @@ import static org.elasticsearch.ingest.ConfigurationUtils.readStringProperty;
 
 public final class DocExtractorProcessor extends AbstractProcessor {
 
+    /*public static final Set<Class<?>> endClass = Set.of(
+            int.class,
+            long.class,
+            float.class,
+            double.class,
+            boolean.class,
+            char.class,
+            String.class,
+            Integer.class,
+            Long.class,
+            Float.class,
+            Double.class,
+            Boolean.class,
+            Character.class,
+            Number.class,
+            Enum.class,
+            CharSequence.class
+    );*/
     public static final String TYPE = "NLPIR_DocExtract";
     private final String field;
     private final FieldType fieldType;
@@ -29,22 +47,24 @@ public final class DocExtractorProcessor extends AbstractProcessor {
         this.fieldType = fieldType;
         this.targetField = targetField;
     }
+
     @Override
-    public IngestDocument execute(IngestDocument ingestDocument) throws IOException, InvalidFormatException{
+    public IngestDocument execute(IngestDocument ingestDocument) throws IOException, InvalidFormatException {
         ZipSecureFile.setMinInflateRatio(-1.0d);
-        Map<String, Object> fieldMap ;
         byte[] input = ingestDocument.getFieldValueAsBytes(this.field);
         InputStream is = new ByteArrayInputStream(input);
-        switch (fieldType){
+        Element fieldObj;
+        switch (fieldType) {
             case PDF:
-                fieldMap = new com.lingjoin.nlpir.plugin.ingest.pdf.Document(is).toMap();
+                fieldObj = new com.lingjoin.nlpir.plugin.ingest.document.pdf.Document(is);
                 break;
             case DOCX:
-                fieldMap = new Document(is).toMap();
+                fieldObj = new Document(is);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + fieldType);
         }
+        Map<String, Object> fieldMap = fieldObj.toMap();
         ingestDocument.setFieldValue(targetField, fieldMap);
         return ingestDocument;
     }
@@ -62,6 +82,42 @@ public final class DocExtractorProcessor extends AbstractProcessor {
         return targetField;
     }
 
+    /*public Map<String, Object> object2Map(Object obj) throws IllegalAccessException {
+        if (obj == null) {
+            return null;
+        }
+        Map<String, Object> objMap = new HashMap<>();
+
+//        System.out.println("--------------------");
+//        System.out.println(obj);
+//        System.out.println(obj.toString());
+
+        for (Field field : obj.getClass().getDeclaredFields()) {
+//            System.out.println("=========================");
+//            System.out.println(field.getType());
+//            System.out.println(field.toString());
+//            System.out.println(field.getName());
+            field.setAccessible(true);
+            if (endClass.contains(field.getType())) {
+
+                objMap.put(field.getName(), field.get(obj));
+            } else {
+                Object fieldObj = field.get(obj);
+                if (fieldObj instanceof List) {
+                    List<?> fieldObjListList = (List<?>) fieldObj;
+                    List<Map<String, Object>> listMap = new ArrayList<>();
+                    for (Object itemObject : fieldObjListList) {
+                        listMap.add(this.object2Map(itemObject));
+                    }
+                    objMap.put(field.getName(), listMap);
+                } else {
+                    objMap.put(field.getName(), this.object2Map(field.get(obj)));
+                }
+            }
+        }
+        return objMap;
+    }*/
+
     public static final class Factory implements Processor.Factory {
 
         @Override
@@ -74,8 +130,9 @@ public final class DocExtractorProcessor extends AbstractProcessor {
             return new DocExtractorProcessor(processorTag, description, field, fieldType, targetField);
         }
     }
-    public enum FieldType{
-        DOCX, PDF;
+
+    public enum FieldType {
+        DOCX, PDF
     }
 
 }

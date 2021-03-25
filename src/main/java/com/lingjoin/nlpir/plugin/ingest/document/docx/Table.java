@@ -1,5 +1,6 @@
-package com.lingjoin.nlpir.plugin.ingest.docx;
+package com.lingjoin.nlpir.plugin.ingest.document.docx;
 
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
@@ -52,7 +53,7 @@ public class Table extends Element {
         If omitted, the value is assumed to be continue.
         See the discussion of <w:tblGrid> at Table Grid/Column Definition.
          */
-        CONTINUE, RESTART;
+        CONTINUE, RESTART
     }
 
     protected class Cell extends Element {

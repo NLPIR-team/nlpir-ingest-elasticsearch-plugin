@@ -1,5 +1,6 @@
-package com.lingjoin.nlpir.plugin.ingest.docx;
+package com.lingjoin.nlpir.plugin.ingest.document.docx;
 
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.poi.xwpf.usermodel.*;
 import org.elasticsearch.SpecialPermission;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class StructuredDocumentTag extends Element {
-    private final List<IElement> content;
+    private final List<Element> content;
     private final String elementType;
 
     public StructuredDocumentTag(XWPFSDT xwpfsdt) {

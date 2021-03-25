@@ -1,21 +1,17 @@
-package com.lingjoin.nlpir.plugin.ingest.pdf;
+package com.lingjoin.nlpir.plugin.ingest.document.pdf;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.lingjoin.nlpir.plugin.ingest.document.Element;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.elasticsearch.SpecialPermission;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Document {
+public class Document extends Element {
     private final List<Page> pages;
 
     public Document(InputStream is) throws IOException {
@@ -38,20 +34,8 @@ public class Document {
 
     public Map<String, Object> toMap() {
 
-
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            sm.checkPermission(new SpecialPermission());
-        }
-        return AccessController.doPrivileged(
-                (PrivilegedAction<Map<String, Object>>) () -> {
-                    Gson gson = new Gson();
-                    String json = gson.toJson(this);
-                    Type type = new TypeToken<Map<String, Object>>() {
-                    }.getType();
-                    return gson.fromJson(json, type);
-                }
-        );
-
+        Map<String, Object> map = new HashMap<>();
+        this.parseList(map, "pages", pages);
+        return map;
     }
 }
