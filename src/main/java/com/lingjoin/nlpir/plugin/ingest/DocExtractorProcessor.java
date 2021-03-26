@@ -65,7 +65,13 @@ public final class DocExtractorProcessor extends AbstractProcessor {
                 throw new IllegalStateException("Unexpected value: " + fieldType);
         }
         Map<String, Object> fieldMap = fieldObj.toMap();
-        ingestDocument.setFieldValue(targetField, fieldMap);
+        if (targetField.equals("root")) {
+            for (Map.Entry<String, Object> entry : fieldMap.entrySet()) {
+                ingestDocument.setFieldValue(entry.getKey(), entry.getValue());
+            }
+        } else {
+            ingestDocument.setFieldValue(targetField, fieldMap);
+        }
         return ingestDocument;
     }
 
@@ -125,7 +131,7 @@ public final class DocExtractorProcessor extends AbstractProcessor {
                                             String description, Map<String, Object> config) {
             String field = readStringProperty(TYPE, processorTag, config, "field");
             FieldType fieldType = FieldType.valueOf(readStringProperty(TYPE, processorTag, config, "fieldType"));
-            String targetField = readStringProperty(TYPE, processorTag, config, "target_field", "doc_extract");
+            String targetField = readStringProperty(TYPE, processorTag, config, "targetField", "doc_extract");
 
             return new DocExtractorProcessor(processorTag, description, field, fieldType, targetField);
         }
