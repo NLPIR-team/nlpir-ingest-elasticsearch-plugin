@@ -28,10 +28,6 @@ public class Document extends Element {
         pdd.close();
     }
 
-    public List<Page> getPages() {
-        return pages;
-    }
-
     public Map<String, Object> toMap() {
 
         Map<String, Object> map = new HashMap<>();

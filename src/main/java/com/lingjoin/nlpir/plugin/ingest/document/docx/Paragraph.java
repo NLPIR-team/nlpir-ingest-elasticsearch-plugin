@@ -15,10 +15,12 @@ public class Paragraph extends Element {
     private final List<Run> runs;
     private final Double fontSize;
     private final String elementType;
+    private final String text;
 
     public Paragraph(XWPFParagraph paragraph) {
         Double size = null;
-        List<CTHpsMeasure> ctHpsMeasureList = Optional.ofNullable(paragraph)
+        text = paragraph.getText();
+        List<CTHpsMeasure> ctHpsMeasureList = Optional.of(paragraph)
                 .map(XWPFParagraph::getCTP)
                 .map(CTP::getPPr)
                 .map(CTPPr::getRPr)
@@ -54,6 +56,7 @@ public class Paragraph extends Element {
         this.parseList(map, "runs", runs);
         map.put("fontSize", fontSize);
         map.put("elementType", elementType);
+        map.put("text", text);
         return map;
     }
 }
