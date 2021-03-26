@@ -21,9 +21,8 @@ esplugin {
     name 'nlpir-ingest'
     description 'An example plugin showing how to register custom settings'
     classname 'com.lingjoin.nlpir.plugin.ingest.NLPIRIngestPlugin'
-    // TODO make a real file not a fake one
-    licenseFile rootProject.file('NOTICE.txt')
-    noticeFile rootProject.file('NOTICE.txt')
+     licenseFile rootProject.file('NOTICE.txt')
+     noticeFile rootProject.file('NOTICE.txt')
 
 }
 sourceCompatibility = 11
@@ -43,7 +42,7 @@ validateNebulaPom.enabled = false
 
 
 group 'com.lingjoin'
-version '0.2.1-b'
+version '0.3.0-b'
 
 repositories {
     mavenCentral()
