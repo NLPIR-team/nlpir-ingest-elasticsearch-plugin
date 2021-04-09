@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class Element{
+public abstract class Element {
 
     protected void parseList(Map<String, Object> map, String fieldName, List<? extends Element> listField) {
         if (listField == null) return;
@@ -14,5 +14,6 @@ public abstract class Element{
     public void parseObject(Map<String, Object> map, String fieldName, Element field) {
         map.put(fieldName, field.toMap());
     }
+
     public abstract Map<String, Object> toMap();
 }

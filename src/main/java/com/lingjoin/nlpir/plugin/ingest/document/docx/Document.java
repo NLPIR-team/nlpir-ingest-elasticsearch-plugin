@@ -20,8 +20,8 @@ public class Document extends Element {
     protected final String category;
     protected int charCount;
 
-    protected List<Footer> footers;
-    protected List<Header> headers;
+    protected final List<Footer> footers = null;
+    protected final List<Header> headers = null;
 
     protected List<Element> elements;
 
@@ -64,12 +64,13 @@ public class Document extends Element {
         doc.close();
 
     }
-    public Map<String, Object> toMap(){
+
+    public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("author", this.author);
         map.put("title", this.title);
         map.put("created", created);
-        map.put("subject",subject);
+        map.put("subject", subject);
         map.put("keywords", keywords);
         map.put("description", description);
         map.put("category", category);
@@ -79,5 +80,6 @@ public class Document extends Element {
         this.parseList(map, "elements", elements);
         return map;
     }
+
 
 }
